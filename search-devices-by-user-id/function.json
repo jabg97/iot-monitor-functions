@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ],
+      "route":"devices/search/byUser/{id}"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "devices",
+      "databaseName": "iot-db",
+      "collectionName": "devices",
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "in",
+      "sqlQuery": "SELECT * FROM d WHERE d.userId = {id}"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ],
+  "scriptFile": "../dist/search-devices-by-user-id/index.js"
+}
