@@ -5,8 +5,8 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": ["get"],
-      "route": "devices/search/byUser/{id}"
+      "methods": ["put"],
+      "route": "devices/{id}/link/byUser"
     },
     {
       "type": "cosmosDB",
@@ -15,7 +15,15 @@
       "collectionName": "devices",
       "connectionStringSetting": "CosmosDBConnection",
       "direction": "in",
-      "sqlQuery": "SELECT * FROM d WHERE d.userId = {id}"
+      "sqlQuery": "SELECT * FROM d WHERE d.id = {id}"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "newDevice",
+      "databaseName": "iot-db",
+      "collectionName": "devices",
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "out"
     },
     {
       "type": "http",
@@ -23,5 +31,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/search-devices-by-user-id/index.js"
+  "scriptFile": "../dist/link-device/index.js"
 }

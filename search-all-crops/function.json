@@ -5,10 +5,8 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": [
-        "get"
-      ],
-      "route":"crops"
+      "methods": ["get"],
+      "route": "crops"
     },
     {
       "type": "cosmosDB",
@@ -16,8 +14,7 @@
       "databaseName": "iot-db",
       "collectionName": "crops",
       "connectionStringSetting": "CosmosDBConnection",
-      "direction": "in",
-      "sqlQuery": "SELECT * FROM c"
+      "direction": "in"
     },
     {
       "type": "http",
