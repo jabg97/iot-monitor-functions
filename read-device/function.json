@@ -1,0 +1,35 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": ["put"],
+      "route": "devices/read/{id}"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "device",
+      "databaseName": "iot-db",
+      "collectionName": "devices",
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "in",
+      "sqlQuery": "SELECT * FROM d WHERE d.id = {id}"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "newDevice",
+      "databaseName": "iot-db",
+      "collectionName": "devices",
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "out"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ],
+  "scriptFile": "../dist/read-device/index.js"
+}

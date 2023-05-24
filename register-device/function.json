@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": ["post"],
+      "route": "devices"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "newDevice",
+      "databaseName": "iot-db",
+      "collectionName": "devices",
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "out"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ],
+  "scriptFile": "../dist/register-device/index.js"
+}
