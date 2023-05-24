@@ -12,13 +12,15 @@ const httpTrigger: AzureFunction = async function (
   };
   const device = devices && devices.length ? devices[0] : undefined;
   if (device) {
-    if (!device.userId != !req.body.userId) {
+    const hasOwner = device.userId != "unregistered";
+    const nextOwner = req.body.userId != "unregistered";
+    if (hasOwner != nextOwner) {
       context.bindings.newDevice = device;
       context.bindings.newDevice.userId = req.body.userId;
       response = {
         status: 200,
         message: `The device has been ${
-          req.body.userId == null ? "unlinked" : "linked"
+          nextOwner ? "linked" : "unlinked"
         } successfully.`,
         device: context.bindings.newDevice,
       };
@@ -26,7 +28,7 @@ const httpTrigger: AzureFunction = async function (
       response = {
         status: 403,
         message: `You can't ${
-          req.body.userId == null ? "unlink" : "link"
+          nextOwner ? "link" : "unlink"
         } this device.`,
         device: null,
       };
