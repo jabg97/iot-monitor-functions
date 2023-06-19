@@ -43,6 +43,7 @@ const httpTrigger: AzureFunction = async function (
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
+    date.setHours(date.getHours()-5); 
     const data = {
       dateTime: date.toISOString(),
       state: getState(
@@ -59,6 +60,10 @@ const httpTrigger: AzureFunction = async function (
     } else {
       context.bindings.newDevice.history = [data];
     }
+    context.bindings.message = {
+      body : data.state,
+      to : '+573185602181'
+    };
     response = {
       status: 200,
       message: "The device has been readed successfully.",
@@ -86,19 +91,19 @@ const getState = function (
   }
 
   if (sensor.currentAirHumidity < range.minAirHumidity) {
-    state = `Low air humidity ${sensor.currentAirHumidity}% -:- `;
+    state += `Low air humidity ${sensor.currentAirHumidity}% -:- `;
   } else if (sensor.currentAirHumidity > range.maxAirHumidity) {
-    state = `High air humidity ${sensor.currentAirHumidity}% -:- `;
+    state += `High air humidity ${sensor.currentAirHumidity}% -:- `;
   } else {
-    state = `Normal air humidity ${sensor.currentAirHumidity}% -:- `;
+    state += `Normal air humidity ${sensor.currentAirHumidity}% -:- `;
   }
 
   if (sensor.currentSoilMoisture < range.minSoilMoisture) {
-    state = `Low soil moisture ${sensor.currentSoilMoisture}%`;
+    state += `Low soil moisture ${sensor.currentSoilMoisture}%`;
   } else if (sensor.currentSoilMoisture > range.maxSoilMoisture) {
-    state = `High soil moisture ${sensor.currentSoilMoisture}%`;
+    state += `High soil moisture ${sensor.currentSoilMoisture}%`;
   } else {
-    state = `Normal soil moisture ${sensor.currentSoilMoisture}%`;
+    state += `Normal soil moisture ${sensor.currentSoilMoisture}%`;
   }
 
   return state;

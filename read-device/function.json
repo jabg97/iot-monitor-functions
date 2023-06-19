@@ -26,6 +26,12 @@
       "direction": "out"
     },
     {
+      "type": "twilioSms",
+      "name": "message",
+      "from": "+14066257945",
+      "direction": "out"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "res"
